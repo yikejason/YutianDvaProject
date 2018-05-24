@@ -7,7 +7,6 @@ import { connect } from 'dva';
 import styles from './IndexPage.css';
 import {Button} from 'antd';
 
-
 class IndexPage extends Component{
   render(){
     return(
