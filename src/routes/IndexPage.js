@@ -5,12 +5,15 @@
 import React,{Component} from 'react';
 import { connect } from 'dva';
 import styles from './IndexPage.css';
+import {Button} from 'antd';
+
 
 class IndexPage extends Component{
   render(){
     return(
       <div className={styles.normal}>
-        <h1 className={styles.title}>123dfd</h1>
+        <h1 className={styles.title}>第一次</h1>
+        <Button type="danger">第一次</Button>
         <div className={styles.welcome}/>
         <ul className={styles.list}>
           <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
