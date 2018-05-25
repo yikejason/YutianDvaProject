@@ -12,11 +12,10 @@ const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
 
 class Home extends Component {
-
   componentDidMount() {
     this.getData();
+    console.log(this.props)
   }
-
   //点击路由跳转
   handleFrist = () => this.props.dispatch(routerRedux.push('/frist'));
 
@@ -82,4 +81,4 @@ class Home extends Component {
 
 Home.propTypes = {};
 
-export default connect()(Home);
+export default connect(({ home }) => ({ home }))(Home);

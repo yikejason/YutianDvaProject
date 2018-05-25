@@ -7,7 +7,9 @@ import {query} from '../services/home';
 
 export default {
   namespace: 'home',
-  state: {},
+  state: {
+    menuData:[],
+  },
   subscriptions: {
     setup({dispatch, history}) {
     },
@@ -17,7 +19,7 @@ export default {
     * fetch({payload}, {call, put}) {
       const response = yield call(query, payload);
       console.log(response)
-      yield put({type: 'save'});
+      yield put({type: 'save',payload: response.Data});
     },
   },
   //把状态抛入store
@@ -25,10 +27,8 @@ export default {
     save(state, action) {
       return {
         ...state,
-        ...action.payload
+        menuData:action.payload
       }
     },
-
-
   },
 };
