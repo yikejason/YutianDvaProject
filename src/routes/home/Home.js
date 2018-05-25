@@ -4,10 +4,11 @@
  */
 import React,{Component} from 'react';
 import { connect } from 'dva';
-import styles from './IndexPage.css';
+import styles from './Home.less';
+import
 import {Button} from 'antd';
 
-class IndexPage extends Component{
+class Home extends Component{
   render(){
     return(
       <div className={styles.normal}>
@@ -23,7 +24,7 @@ class IndexPage extends Component{
   }
 }
 
-IndexPage.propTypes = {
+Home.propTypes = {
 };
 
-export default connect()(IndexPage);
+export default connect()(Home);
