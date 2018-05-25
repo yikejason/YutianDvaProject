@@ -6,3 +6,5 @@ dva g model users （model文件名）
 
 3.用 dva-cli 生成 component
 dva g component Users/Users （component文件夹下的文件名）
+
+

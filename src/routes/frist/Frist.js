@@ -4,11 +4,11 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'dva';
-import { RouterRedux} from 'dva/router';
+
 class Frist extends Component {
 
-  render(){
-    return(
+  render() {
+    return (
       <div>123</div>
     )
   }
