@@ -31,7 +31,20 @@ class Home extends Component {
   };
 
   //获取当前用户信息
-  getUserInfo = () => this.props.dispatch({type:'home/GetUserInfo',});
+  getUserInfo = () => {
+    this.props.dispatch({type: 'home/GetUserInfo'})
+      .then(() => {
+        const {userInfoData} = this.props.home;
+        this.getMenu(userInfoData.ZXGroups[0].GID)
+      });
+  };
+  //获取左侧菜单
+  getMenu = (gID) => {
+    this.props.dispatch({
+      type:'home/GetMenu',
+      payload:{gID:gID}
+    });
+  };
 
   //侧边栏折叠
   toggle = () => this.setState({collapsed: !this.state.collapsed});
