@@ -1,5 +1,5 @@
 import request from '../utils/request';
 
-export async function query() {
-  return request('/api/menulist');
+export async function getUserInfo() {
+  return request('/ZX/v3/AuthGW/GetCurrUserInfo');
 }

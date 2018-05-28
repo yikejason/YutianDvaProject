@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import styles from './Home.less';
 import {Layout, Menu, Breadcrumb, Icon} from 'antd';
+import Token from '../../utils/token'
 
 const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
@@ -14,30 +15,51 @@ class Home extends Component {
   state = {
     collapsed: false,
   };
-
   componentDidMount() {
-    this.getData();
+    this.validateToken();
   }
-
-  //初始化数据
-  getData = () => {
-    this.props.dispatch({
-      type: 'home/fetch',
-      payload: {}
-    })
+  //验证用户信息初始化数据
+  validateToken = () => {
+    if(sessionStorage.getItem('token')){
+      this.getUserInfo();
+    }else{
+      Token.getUserToken().then(res=>{
+        sessionStorage.setItem('token',res.Data.Token);
+        this.getUserInfo();
+      })
+    }
   };
+
+  //获取当前用户信息
+  getUserInfo = () => this.props.dispatch({type:'home/GetUserInfo',});
 
   //侧边栏折叠
   toggle = () => this.setState({collapsed: !this.state.collapsed});
-
-
   render() {
     const {collapsed} = this.state;
+    const {userInfoData} = this.props.home;
     return (
       <Layout className={styles.layoutContent}>
         <Header className={styles.header}>
           <span className={styles.logo}><i className={styles.iconLogo}/>搭建内容模板</span>
           <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle} className={styles.toggle}/>
+          {(userInfoData && userInfoData.length!==0) && <Menu
+            onClick={this.handleHorizontalMenuClick}
+            mode="horizontal"
+            theme="dark"
+            className={styles.menuHorizontal}>
+            <SubMenu key={1} title={
+              <div className={styles.userInfo}>
+                <i className={styles.userPic} style={{backgroundImage: `url(${userInfoData.Pic})`}}/>
+                {userInfoData.Name}
+                <Icon type="caret-down"/>
+              </div>}
+            >
+              {userInfoData.ZXGroups.map((item)=><Menu.Item key={item.GID}>{item.Name}</Menu.Item>)}
+              <Menu.Divider/>
+              <Menu.Item key="back"><Icon type="logout"/>返回</Menu.Item>
+            </SubMenu>
+          </Menu>}
         </Header>
         <Layout>
           <Sider width={200} collapsed={collapsed}>

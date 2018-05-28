@@ -2,31 +2,32 @@
  * Created by Yu Tian Xiong on 2018/05/25.
  * fileName:home dva 入口 model文件
  */
-import {query} from '../services/home';
+import {getUserInfo} from '../services/home';
 
 export default {
   namespace: 'home',
   state: {
-    menuData:[],
+    userInfoData:[],
   },
   subscriptions: {
     setup({dispatch, history}) {
     },
   },
-  //异步请求
+  //异步请求获取用户数据
   effects: {
-    * fetch({payload}, {call, put}) {
-      const response = yield call(query, payload);
-      yield put({type: 'save',payload: response.Data});
+    * GetUserInfo({payload}, {call, put}) {
+      const response = yield call(getUserInfo, payload);
+      yield put({type: 'getUserInfo',payload: response.Data});
     },
   },
   //把状态抛入store
   reducers: {
-    save(state, action) {
+    getUserInfo(state, action) {
       return {
         ...state,
-        menuData:action.payload
+        userInfoData:action.payload
       }
     },
+
   },
 };

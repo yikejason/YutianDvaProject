@@ -1,11 +1,6 @@
 import fetch from 'dva/fetch';
 import {notification} from 'antd';
-
-//基本配置信息
-const Config = {
-  rap_api: '//rap2api.taobao.org/app/mock/14412',//rap淘宝模拟数据api
-  production_api: '',//生产环境api
-};
+import Config from './Config'
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -69,7 +64,10 @@ export default function request(url, options) {
     }
   }
   //重组拼接请求Url
-  const newUrl = `${Config.rap_api}` + url;
+  // 从sessionStorage中获取token
+  const token = sessionStorage.getItem('token');
+  let newUrl = token ? url + `${url.indexOf("?") === -1 ? "?" : "&"}token=${token}` : url;
+  newUrl = `${Config.test_api}` + newUrl;
   return fetch(newUrl, newOptions)
     .then(checkStatus)
     .then((response) => {
