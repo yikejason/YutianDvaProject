@@ -3,18 +3,19 @@
  * fileName:rotuer
  */
 import React from 'react';
-import {Router, Route, Switch} from 'dva/router';
+import {routerRedux} from 'dva/router';
 import Home from './routes/home/Home';
-import Frist from './routes/frist/Frist';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import {LocaleProvider} from 'antd';
 
+const { ConnectedRouter } = routerRedux;
 function RouterConfig({history}) {
   return (
-    <Router history={history}>
-      <Switch>
-        <Route path="/" exact component={Home}/>
-        <Route path="/frist" exact component={Frist}/>
-      </Switch>
-    </Router>
+    <ConnectedRouter history={history}>
+      <LocaleProvider locale={zhCN}>
+          <Home/>
+      </LocaleProvider>
+    </ConnectedRouter>
   );
 }
 

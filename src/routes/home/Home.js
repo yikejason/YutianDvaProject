@@ -4,9 +4,11 @@
  */
 import React, {Component} from 'react';
 import {connect} from 'dva';
+import {Route, Switch,Link,withRouter} from 'dva/router';
 import styles from './Home.less';
 import {Layout, Menu, Breadcrumb, Icon} from 'antd';
-import Token from '../../utils/token'
+import Token from '../../utils/token';
+import routers from '../../homeRoute';
 
 const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
@@ -81,14 +83,19 @@ class Home extends Component {
                {(menuData && menuData.length!== 0) && menuData.map((item)=>
                  !item.SubMenus ?
                    <Menu.Item key={item.ID}>
-                     <Icon type="pie-chart"/>
-                     <span>{item.Name}</span>
+                     <Link to={item.Url}>
+                       <Icon type="pie-chart"/><span>{item.Name}</span>
+                     </Link>
                    </Menu.Item> :
                    <SubMenu
                      key={item.ID}
                      title={<span><Icon type="user"/><span>{item.Name}</span></span>}
                    >
-                     {item.SubMenus && item.SubMenus.map((menu) => <Menu.Item key={menu.ID}>{menu.Name}</Menu.Item>)}
+                     {item.SubMenus && item.SubMenus.map((menu) =>
+                       <Menu.Item key={menu.ID}>
+                         {menu.Name}
+                       </Menu.Item>)
+                     }
                    </SubMenu>
                )}
             </Menu>
@@ -100,7 +107,9 @@ class Home extends Component {
               <Breadcrumb.Item>App</Breadcrumb.Item>
             </Breadcrumb>
             <Content className={styles.layoutTwoText}>
-              Content
+              <Switch>
+                {routers.map((item,index)=><Route key={index} path={item.path} exact={item.exact} component={item.component}/>)}
+              </Switch>
             </Content>
             <Footer className={styles.layoutContentTwoFooter}>
               Ant Design ©2016 Created by Ant UED
@@ -114,4 +123,4 @@ class Home extends Component {
 
 Home.propTypes = {};
 
-export default connect(({home}) => ({home}))(Home);
+export default withRouter(connect(({home}) => ({home}))(Home));
