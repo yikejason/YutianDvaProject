@@ -18,7 +18,7 @@ class Home extends Component {
     collapsed: false,
   };
   componentDidMount() {
-    this.validateToken();
+    // this.validateToken();
   }
   //验证用户信息初始化数据
   validateToken = () => {
